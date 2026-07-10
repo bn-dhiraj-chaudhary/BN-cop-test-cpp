@@ -1,0 +1,4 @@
+BN-cop-test-cpp
+*.o
+.synopsys/
+.polaris.yml

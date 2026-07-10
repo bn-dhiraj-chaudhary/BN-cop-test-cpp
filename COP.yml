@@ -1,0 +1,24 @@
+# Coverity on Polaris (COP) capture/analyze configuration for cop-test-cpp.
+capture:
+  build:
+    clean-command: "make clean"
+    build-command: "make all"
+  files:
+    exclude-regex: (\.git)/.*
+  languages:
+    include: [c-family]
+analyze:
+  mode: central
+  coverity:
+    cov-analyze:
+      - "--webapp-security"
+      - "--security"
+      - "--enable"
+      - "HARDCODED_CREDENTIALS"
+      - "--enable"
+      - "BUFFER_SIZE"
+      - "--enable"
+      - "OS_CMD_INJECTION"
+install:
+  coverity:
+    version: default
