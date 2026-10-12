@@ -1,9 +1,0 @@
-name: UnknownBuildPipeline
-
-steps:
-  - script: "echo Starting build"
-  - script: "./custom-build-tool"
-  - script: "echo Build completed"
-
-environment:
-  BUILD_MODE: "custom"
