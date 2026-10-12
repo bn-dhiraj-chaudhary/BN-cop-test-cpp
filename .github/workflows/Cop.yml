@@ -1,48 +1,30 @@
-name: quality ci
- 
-on:
-
-  workflow_dispatch:
- 
-jobs:
-
-  coverity-on-polaris:
-
-    name: Coverity on Polaris Scan
-
-    runs-on: ubuntu-latest
- 
-    steps:
-
-      - name: Checkout Source
-
-        uses: actions/checkout@v6
- 
-      - name: Download Polaris CLI
-
-        shell: bash
-
-        run: |
-
-          set -euo pipefail
- 
-          echo "Downloading Polaris CLI..."
- 
-          curl -fsSL -o polaris.zip \
-
-            "$POLARIS_SERVER_URL/api/tools/polaris_cli-linux64.zip"
- 
-          unzip -o -j polaris.zip
-
-          chmod +x polaris
- 
-      - name: Run Polaris Scan
-
-        shell: bash
-
-        run: |
-
-          set -euo pipefail
- 
-          ./polaris analyze -w
- 
+# Coverity on Polaris (COP) capture/analyze configuration for cop-test-javascript.
+# JavaScript is buildless for Coverity capture, so no build/clean commands are required.
+version: "1"
+serverUrl: https://csprod.polaris.synopsys.com
+project:
+  name: ${scm.git.repo}
+  branch: ${scm.git.branch}
+capture:
+  fileSystem:
+    javascript:
+      files:
+      - directory: ${project.projectDir}
+        excludeRegex: (node_modules|\.git)/.*
+  languages:
+    include: [javascript]
+analyze:
+  mode: central
+  coverity:
+    cov-analyze:
+      - "--webapp-security"
+      - "--security"
+      - "--enable"
+      - "HARDCODED_CREDENTIALS"
+      - "--enable"
+      - "SQLI"
+      - "--enable"
+      - "OS_CMD_INJECTION"
+install:
+  coverity:
+    version: default
