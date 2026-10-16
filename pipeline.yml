@@ -1,14 +1,8 @@
 
-name: quality-check
- 
+name: COP Pipeline (cpp)
+
 on:
-  
- 
- 
-      - name: Display Repository Information
-        shell: bash
-        run: |
-          set -euo pipefail
-          echo "Repository validation started."
-          echo "Current directory: $(pwd)"
-          echo "Validation completed."
+  push:
+    branches: [main]
+  workflow_dispatch:
+
