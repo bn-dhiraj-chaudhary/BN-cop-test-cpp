@@ -1,0 +1,7 @@
+capture:
+  build:
+    clean-command: 'dotnet clean acq-api.sln --configuration Release'
+    # env variable value will be overridden as a passed parameter
+    build-command: 'dotnet build ${SOLUTION_FILE} --configuration ${BUILD_CONFIGURATION}'
+  files:
+    exclude-regex: '(^|[/\\])tests([/\\]|$)'
